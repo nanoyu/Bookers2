@@ -1,0 +1,80 @@
+<div class=main>
+	<div class='container'>
+		<div>
+			<% unless flash[:error].blank? %>
+			<%= flash[:error].each do |error| %>
+			<% error %>
+			<% end %>
+			<% end %>
+		</div>
+
+		<div class='row'>
+			<div class='col-xs-3'>
+
+				<h1>User info</h1>
+
+				<table class='table'>
+					<tbody>
+						<%= attachment_image_tag @user, :image, :fill, 100, 100, fallback: "no_image.jpg" %>
+						<tr>
+							<td>name</td>
+							<td><%= @user.name%></td>
+						</tr>
+						<tr>
+							<td>introduction</td>
+							<td><%= @user.introduction %></td>
+						</tr>
+					</tbody>
+				</table>
+				<p><%= link_to '', edit_user_path(@user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench"%></p>
+
+				<h2>New book</h2>
+				<!-- form_for部分 -->
+				<%= form_for(@book) do |f| %>
+				<div class="field row">
+					<h4>Title</h4>
+					<%= f.text_field :title, class: "book_title" %>
+				</div>
+				<div class="field row">
+					<h4>Opinion</h4>
+					<%= f.text_area :body,class: "book_body" %>
+				</div>
+				<div class="actions row">
+					<p><%= f.submit 'Create Book' %></p>
+				</div>
+				<% end %>
+			</div>
+
+
+			<div class='col-xs-9'>
+				<h1>Books</h1>
+				<table class='table table-hover table-inverse'>
+					<thead>
+						<tr>
+							<th></th>
+							<th>Title</th>
+							<th>Opinion</th>
+							<th colspan="3"></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<% @books.each do |book| %>
+						<tr>
+							<td>
+								<%= attachment_image_tag @user, :image, :fill, 100, 100, fallback: "no_image.jpg", :size => '40' %>
+							</td>
+							<td>
+								<%= link_to book.title, book_path(book.id), class: "show_#{book.id}" %>
+							</td>
+							<td>
+								<%= book.body %>
+							</td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
