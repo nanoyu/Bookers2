@@ -25,17 +25,18 @@ before_action :authenticate_user!
   def create
   	@user = User.new(user_params)
   	@user.user_id = current_user.id
-  	@user.save
-  	redirect_to edit_user_path
+    @user.save
+  	 redirect_to edit_user_path
   end
 
   def update
   	  user = User.find(params[:id])
     if user.update(user_params)
-  	  redirect_to user_path(user.id)
+       flash[:notice] = "User was successfully updated"
+  	   redirect_to mypage_path(current_user.id)
   	else
   	 	flash[:error] = user.errors.full_messages
-  	  redirect_to mypage_path(current_user.id)
+  	  redirect_to edit_user_path(user.id)
   	end
   end
 

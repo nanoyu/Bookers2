@@ -1,6 +1,15 @@
 <div class="main">
 
 	<div class='container'>
+
+		<div>
+			<% unless flash[:error].blank? %>
+			<%= flash[:error].each do |error| %>
+			<% error %>
+			<% end %>
+			<% end %>
+		</div>
+
 		<h1>User info</h1>
 		<!-- form_for部分 -->
 		<%= form_for(@user) do |f| %>

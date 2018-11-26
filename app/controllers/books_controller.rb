@@ -28,7 +28,7 @@ before_action :authenticate_user!
 
   def edit
   	@book = Book.find(params[:id])
-    if @book!=current_user
+    if @book.user != current_user
        redirect_to books_path
     end
   end
@@ -38,6 +38,9 @@ before_action :authenticate_user!
     if book.update(book_params)
   	   flash[:notice] = "Book was successfully updated"
   	   redirect_to book_path(book.id)
+    else
+      flash[:error] = book.errors.full_messages
+      redirect_to edit_book_path(book.id)
     end
   end
 
